@@ -3,17 +3,33 @@ Docker Apache container with https turned after inserting certs
 
 ## Sertificates
 
-### Create self-signes certificates using OpenSSL 
+### Create self-signes certificates using OpenSSL (Good for local deveploment)
 #### This will create certificate and key
 ```
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt
 ```
-
 ### Get certificate from Let’s Encrypt(https://letsencrypt.org/) using Certbot(https://certbot.eff.org/)
-#### Install Cerbot and follow instructions and you should end up with certificate file and key
+#### Install Cerbot and install certs by following instructions and you should end up with certificate file and key. Requires to open ports for Let’s Encrypt to verify the domain name.
+
+## Clone this repository
 ```
-sudo yum install certbot
-sudo certbot certonly
+git clone https://github.com/NikoHeikki/https-docker-apache.git
+```
+## Modify dev.conf
+### Change ServerName to the name of your server, change SSLCertificateFile and SSLCertificateKeyFile to point out created files.
+
+## Modify Dockerfile
+### Change COPY command to point to certificate and key name, for Cerbot certificate this is usually fullchain.pem and privkey.pem
+
+## Build Docker image
+```
+docker build -t htpps-apache:stable .
 ```
 
+## Run docker container from Apache foreground
+```
+docker run -p 80:80 -p 443:443 htpps-apache:stable apache2-foreground
+```
+
+## Check localhost for https, chrome warns for https not secure if you are using self-signed certificate instead of CA certificate but self-signed is still secure but its not validated.
 

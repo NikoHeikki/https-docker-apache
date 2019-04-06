@@ -28,7 +28,7 @@ docker build -t htpps-apache:stable .
 
 ## Run docker container from Apache foreground
 ```
-docker run -p 80:80 -p 443:443 htpps-apache:stable apache2-foreground
+docker run -v $(pwd)/index.php:/var/www/html/index.php -d  -p 443:443 htpps-apache:stable apache2-foreground
 ```
 
 ## Check localhost for https

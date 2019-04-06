@@ -16,10 +16,10 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out serv
 git clone https://github.com/NikoHeikki/https-docker-apache.git
 ```
 ## Modify dev.conf
-### Change ServerName to the name of your server, change SSLCertificateFile and SSLCertificateKeyFile to point out created files.
+#### Change ServerName to the name of your server, change SSLCertificateFile and SSLCertificateKeyFile to point out created files.
 
 ## Modify Dockerfile
-### Change COPY command to point to certificate and key name, for Cerbot certificate this is usually fullchain.pem and privkey.pem
+#### Change COPY command to point to certificate and key name, for Cerbot certificate this is usually fullchain.pem and privkey.pem
 
 ## Build Docker image
 ```
@@ -31,5 +31,6 @@ docker build -t htpps-apache:stable .
 docker run -p 80:80 -p 443:443 htpps-apache:stable apache2-foreground
 ```
 
-## Check localhost for https, chrome warns for https not secure if you are using self-signed certificate instead of CA certificate but self-signed is still secure but its not validated.
+## Check localhost for https
+#### chrome warns for https not secure if you are using self-signed certificate instead of CA certificate but self-signed is still secure but its not validated.
 
